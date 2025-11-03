@@ -445,10 +445,11 @@
         .autocomplete-item-type {
             display: inline-block;
             padding: 2px 8px;
-            background: #4aaedf;
-            color: white;
+            background: #E6C00E;
+            color: #333;
             border-radius: 3px;
             font-size: 0.75em;
+            font-weight: 600;
             margin-top: 4px;
         }
 
@@ -548,21 +549,11 @@
         .result-type {
             display: inline-block;
             padding: 4px 12px;
-            background: #4aaedf;
-            color: white;
-            border-radius: 3px;
-            font-size: 0.85em;
-            font-weight: 500;
-        }
-
-        .result-type.applicatie {
             background: #E6C00E;
             color: #333;
-        }
-
-        .result-type.sap-rol {
-            background: #3EA0CF;
-            color: white;
+            border-radius: 3px;
+            font-size: 0.85em;
+            font-weight: 600;
         }
 
         .add-btn {
@@ -652,22 +643,12 @@
         .cart-item-type {
             display: inline-block;
             padding: 3px 10px;
-            background: #4aaedf;
-            color: white;
-            border-radius: 3px;
-            font-size: 0.8em;
-            font-weight: 500;
-            margin-top: 4px;
-        }
-
-        .cart-item-type.applicatie {
             background: #E6C00E;
             color: #333;
-        }
-
-        .cart-item-type.sap-rol {
-            background: #3EA0CF;
-            color: white;
+            border-radius: 3px;
+            font-size: 0.8em;
+            font-weight: 600;
+            margin-top: 4px;
         }
 
         .remove-btn {
@@ -2243,21 +2224,13 @@
                 const isInCart = cart.some(cartItem => cartItem.id === item.id);
                 const ownerInfo = item.owner ? `<div class="role-owner"><span class="role-owner-label">Rol eigenaar:</span> ${item.owner}</div>` : '';
 
-                // Bepaal CSS class op basis van type
-                let typeClass = '';
-                if (item.type && item.type.toLowerCase().includes('applicatie')) {
-                    typeClass = 'applicatie';
-                } else if (item.type && item.type.toLowerCase().includes('sap')) {
-                    typeClass = 'sap-rol';
-                }
-
                 return `
                     <div class="result-item">
                         <div class="result-info">
                             <div class="result-name">${item.name}</div>
                             <div class="result-description">${item.description}</div>
                             ${ownerInfo}
-                            <span class="result-type ${typeClass}">${item.type}</span>
+                            <span class="result-type">${item.type}</span>
                         </div>
                         <button
                             class="add-btn"
@@ -2308,25 +2281,15 @@
                 `;
                 orderBtn.disabled = true;
             } else {
-                cartContainer.innerHTML = cart.map(item => {
-                    // Bepaal CSS class op basis van type
-                    let typeClass = '';
-                    if (item.type && item.type.toLowerCase().includes('applicatie')) {
-                        typeClass = 'applicatie';
-                    } else if (item.type && item.type.toLowerCase().includes('sap')) {
-                        typeClass = 'sap-rol';
-                    }
-
-                    return `
-                        <div class="cart-item">
-                            <div class="cart-item-info">
-                                <div class="cart-item-name">${item.name}</div>
-                                <div class="cart-item-type ${typeClass}">${item.type}</div>
-                            </div>
-                            <button class="remove-btn" onclick="removeFromCart(${item.id})">✕</button>
+                cartContainer.innerHTML = cart.map(item => `
+                    <div class="cart-item">
+                        <div class="cart-item-info">
+                            <div class="cart-item-name">${item.name}</div>
+                            <div class="cart-item-type">${item.type}</div>
                         </div>
-                    `;
-                }).join('');
+                        <button class="remove-btn" onclick="removeFromCart(${item.id})">✕</button>
+                    </div>
+                `).join('');
                 orderBtn.disabled = false;
             }
         }
