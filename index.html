@@ -2636,15 +2636,12 @@
             if (index >= 0 && index < autocompleteResults.length) {
                 const selectedItem = autocompleteResults[index];
 
-                // Voeg direct toe aan cart
-                if (!cart.some(cartItem => cartItem.id === selectedItem.id)) {
-                    cart.push(selectedItem);
-                    updateCart();
-                }
-
-                // Clear search en autocomplete
-                document.getElementById('searchInput').value = '';
+                // Vul zoekbalk met geselecteerde naam
+                document.getElementById('searchInput').value = selectedItem.name;
                 hideAutocomplete();
+
+                // Focus blijft op zoekbalk voor verder typen of Enter
+                document.getElementById('searchInput').focus();
             }
         }
 
