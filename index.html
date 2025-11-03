@@ -1692,7 +1692,17 @@
 
             const threshold = 50; // Minimale score om als match te tellen
 
-            // Bereken score voor elk item
+            // Check eerst of er een exacte match is op naam
+            const exactMatch = items.find(item =>
+                item.name.toLowerCase() === searchTerm.toLowerCase()
+            );
+
+            // Als exacte match gevonden, return alleen die match
+            if (exactMatch) {
+                return [exactMatch];
+            }
+
+            // Anders: bereken score voor elk item
             const scoredItems = items.map(item => {
                 // Check scores voor verschillende velden
                 const nameScore = fuzzyMatchScore(searchTerm, item.name);
